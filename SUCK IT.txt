@@ -1,0 +1,33 @@
+
+
+bot.on("ready", async () => {
+    console.log(`${bot.user.username} is online`)
+    bot.user.setActivity("with Peoples Hearts", {type: "PLAYING"});
+})
+
+Please Send $ 28 to https://www.paypal.me/flameflorez. Make sure its through family and friends and not goods and service and send the receipt in this ticket!
+module.exports.run = async (bot, message, args) => {
+    const exampleEmbed = new Discord.MessageEmbed()
+	.setColor('#0099ff')
+	.setTitle('Help commands')
+
+	.setAuthor('FullSendBud', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
+	.setDescription('How to use the commands')
+	.setThumbnail('https://i.imgur.com/wSTFkRM.png')
+	.addFields(
+		{ name: 'Regular field title', value: 'Some value here' },
+		{ name: '\u200B', value: '\u200B' },
+		{ name: 'Inline field title', value: 'Some value here', inline: true },
+		{ name: 'Inline field title', value: 'Some value here', inline: true },
+	)
+	.addField('Inline field title', 'Some value here', true)
+	.setImage('https://i.imgur.com/wSTFkRM.png')
+	.setTimestamp()
+	.setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
+}
+  message.reply("Heres is the command list")
+     message.channel.send("-ban, How to use the -ban command is that you have to copy the users id you are trying to ban and put it in chat.")
+     message.channel.send("-clear, Put up to 99 to delete 100 messages")
+     message.channel.send("-creator, Not really useful but you can try it out")
+     message.channel.send("-fuck, Not useful just for lulz")
+     message.channel.send("-kick, How to use the -kick command is that you have to copy the users id you are trying to  and put it in chat.")
