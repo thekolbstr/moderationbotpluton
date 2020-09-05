@@ -6,6 +6,7 @@ const bot = new Discord.Client({disableEveryone: true});
 require("./util/eventHandler")(bot)
 
 const fs = require("fs");
+const ms = require('ms');
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 
@@ -46,10 +47,10 @@ bot.on('message', message => {
  
     switch (args[0]) {
         case 'mute':
+            if (!message.member.permissions.has("MANAGE_CHANNELS")) return message.channel.send('Lack of Perms!');
             var person  = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[1]));
             if(!person) return  message.reply("I CANT FIND THE USER " + person)
  
-            let mainrole = message.guild.roles.cache.find(role => role.name === "Member");
             let role = message.guild.roles.cache.find(role => role.name === "Muted");
            
  
@@ -61,16 +62,14 @@ bot.on('message', message => {
                 return message.reply("You didnt specify a time!");
             }
  
-            person.roles.add(mainrole)
-            person.roles.remove(role);
- 
-            message.channel.send(`@${person.user.id} has now been muted for ${ms(time)}`)
+            person.roles.add(role)
+    
+            message.channel.send(`@${person.user.username} has now been muted for ${ms(time)}`)
  
             setTimeout(function(){
                 
-                person.roles.add(mainrole)
                 person.roles.remove(role);
-                message.channel.send(`@${person.user.id} has been unmuted.`)
+                message.channel.send(`@${person.user.username} has been unmuted.`)
             }, ms(time));
  
  
@@ -81,31 +80,6 @@ bot.on('message', message => {
  
 });
  
-module.exports = {
-    name: "help",
-    aliases: ["h"],
-    description: "Display all commands and descriptions",
-    execute(message) {
-      let commands = message.client.commands.array();
-  
-      let helpEmbed = new MessageEmbed()
-        .setTitle("Pluton Bot Help")
-        .setDescription("List of all commands")
-        .setColor("#F8AA2A");
-  
-      commands.forEach((cmd) => {
-        helpEmbed.addField(
-          `**${message.client.prefix}${cmd.name} ${cmd.aliases ? `(${cmd.aliases})` : ""}**`,
-          `${cmd.description}`,
-          true
-        );
-      });
-  
-      helpEmbed.setTimestamp();
-  
-      return message.channel.send(helpEmbed).catch(console.error);
-    }
-  };
-  
+
 
 bot.login(process.env.TOKEN);
